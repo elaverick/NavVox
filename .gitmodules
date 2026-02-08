@@ -1,0 +1,3 @@
+[submodule "waze-voicepack-links"]
+	path = waze-voicepack-links
+	url = https://github.com/pipeeeeees/waze-voicepack-links.git
