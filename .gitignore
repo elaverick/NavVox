@@ -1,4 +1,5 @@
 *.mp3
 *.wav
 *.pt
+*.tar.gz
 voice_clone_prompt_path.txt

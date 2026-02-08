@@ -1,5 +1,3 @@
- NavVox
-
 NavVox 🚗🎙️
 ============
 
@@ -27,6 +25,7 @@ This project uses an external conversion tool (included as a git submodule) to e
 *   Python (3.9+ recommended)
 *   FFmpeg
 *   Qwen3-TTS
+*   qrencode
 
 ### Recommended
 
@@ -87,7 +86,7 @@ Create and activate a virtual environment (recommended):
 
 Install Python dependencies (if applicable):
 
-    pip install -r requirements.txt
+    python -m pip install -r requirements.txt
     
 
 _Note: If `requirements.txt` does not exist yet, install dependencies according to your Qwen3-TTS setup._
@@ -123,6 +122,8 @@ This script will:
 *   Use the MP3 + TXT pair to clone the voice
 *   Generate MP3 navigation prompts
 *   Convert them into a Waze-compatible voice pack format
+*   Upload them to the Waze servers
+*   Provide a QR code you can scan on your phone to import the pack
 
 * * *
 
@@ -131,6 +132,7 @@ This script will:
 
 *   Generated MP3 files suitable for Waze
 *   Output structure depends on the conversion tool used via the submodule
+*   QR Code with a link to the new pack
 
 Refer to the Waze voice pack documentation or the included submodule README for details on importing into Waze.
 
@@ -154,6 +156,7 @@ Refer to the Waze voice pack documentation or the included submodule README for 
 *   Voice quality matters — garbage in, garbage out
 *   Make sure FFmpeg is available in your system PATH
 *   This project is intended for personal and experimental use
+*   You can modify the strings in prompts.csv to alter the phrases for each navigation prompt
 
 * * *
 
@@ -169,5 +172,3 @@ Please check individual submodules for their respective licenses. NavVox itself 
 
 *   Qwen3-TTS for voice synthesis
 *   pipeeeeees/waze-voicepack-links for Waze voice pack conversion tooling
-
-Happy navigating — and enjoy hearing _your_ voice give directions! 🚗🗣️

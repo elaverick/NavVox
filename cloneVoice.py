@@ -15,7 +15,7 @@ def main():
     if not os.path.exists(ref_text_path):
         raise FileNotFoundError(f"Expected text file not found: {ref_text_path}")
 
-    with open(ref_text_path, "r", encoding="utf-16") as f:
+    with open(ref_text_path, "r") as f:
         ref_text = f.read().strip()
 
     model = Qwen3TTSModel.from_pretrained(

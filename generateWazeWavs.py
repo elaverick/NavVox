@@ -10,16 +10,27 @@ from qwen_tts import Qwen3TTSModel
 
 BATCH_SIZE = 4
 WAV_DIR = "wavs"
-MP3_DIR = "mp3s"
+MP3_ROOT_DIR = "waze-voicepack-links/mp3_upload/input_packs"
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("voice_clone_prompt", help="Path to .pt voice clone prompt")
     args = parser.parse_args()
 
+    # Extract <NAME> from <NAME>_voice_clone_prompt.pt
+    prompt_basename = os.path.basename(args.voice_clone_prompt)
+    if not prompt_basename.endswith("_voice_clone_prompt.pt"):
+        raise ValueError("Expected prompt filename to end with '_voice_clone_prompt.pt'")
+    name_prefix = prompt_basename.replace("_voice_clone_prompt.pt", "")
+
+    # Create output subfolder for this voice pack
+    MP3_DIR = os.path.join(MP3_ROOT_DIR, name_prefix)
     os.makedirs(WAV_DIR, exist_ok=True)
     os.makedirs(MP3_DIR, exist_ok=True)
 
+    print(f"Using MP3 output directory: {MP3_DIR}")
+
+    # Load model and voice prompt
     model = Qwen3TTSModel.from_pretrained(
         "Qwen/Qwen3-TTS-12Hz-1.7B-Base",
         device_map="cuda:0",
@@ -42,6 +53,7 @@ def main():
             texts.append(text)
             output_files.append(os.path.join(WAV_DIR, output_file))
 
+    # Generate WAVs in batches
     for start in range(0, len(texts), BATCH_SIZE):
         end = start + BATCH_SIZE
 
@@ -64,7 +76,7 @@ def main():
         del wavs
         torch.cuda.empty_cache()
 
-    # Convert WAVs to MP3s
+    # Convert WAVs to MP3s inside the <NAME> folder
     for filename in os.listdir(WAV_DIR):
         if not filename.lower().endswith(".wav"):
             continue
